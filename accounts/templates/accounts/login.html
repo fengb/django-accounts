@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if form.errors and not form.non_field_errors %}
+    <p class="errornote">
+      Please correct the errors below.
+    </p>
+  {% endif %}
+
+  {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+      <p class="errornote">
+        {{ error }}
+      </p>
+    {% endfor %}
+  {% endif %}
+
+  <form action="{% url login %}" method="post" id="login-form">{% csrf_token %}
+    <div>
+      {{ form.username.errors }}
+      <label for="id_username" class="required">Username</label>
+      {{ form.username }}
+    </div>
+    <div>
+      {{ form.password.errors }}
+      <label for="id_password" class="required">Password</label>
+      {{ form.password }}
+    </div>
+
+    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="submit" value="Log in" />
+  </form>
+{% endblock %}
